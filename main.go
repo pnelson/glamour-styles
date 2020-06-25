@@ -40,6 +40,7 @@ func render(color string) error {
 	}
 	b, err := renderer.RenderBytes([]byte("plain text\n\n`code`\n\n```\ncode block\n```\n"))
 	if err != nil {
+		return err
 	}
 	_, err = os.Stdout.Write(b)
 	return err
