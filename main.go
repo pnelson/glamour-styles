@@ -9,13 +9,13 @@ import (
 	"github.com/charmbracelet/glamour/ansi"
 )
 
-var color = flag.String("c", "#546e7a", "color")
-
 func main() {
 	flag.Parse()
-	err := render(*color)
-	if err != nil {
-		log.Fatal(err)
+	for _, color := range []string{"#ff0000", "#00ff00", "#0000ff"} {
+		err := render(color)
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 }
 
@@ -38,11 +38,11 @@ func render(color string) error {
 	if err != nil {
 		return err
 	}
-	b, err := renderer.RenderBytes([]byte("plain text\n\n`code`\n\n```\ncode block\n```\n"))
+	b, err := renderer.RenderBytes([]byte(color + "\n\n`code`\n\n```\ncode block\n```\n"))
 	if err != nil {
 		return err
 	}
-	_, err = os.Stdout.Write(b)
+	_, err = os.Stdout.Write(append(b, '\n'))
 	return err
 }
 
